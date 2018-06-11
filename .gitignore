@@ -1,0 +1,8 @@
+# ignore .c9 config
+.c9/
+
+# ignore .git config
+.git/
+
+# ignore node_modules
+node_modules/
