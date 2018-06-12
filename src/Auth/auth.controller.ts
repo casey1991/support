@@ -1,2 +1,6 @@
 import {Controller,Get} from '@nestjs/common'
-export class AuthController{}
+
+@Controller('auth')
+export class AuthController{
+    
+}
