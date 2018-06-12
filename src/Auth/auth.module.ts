@@ -3,11 +3,11 @@ import { AuthController } from './auth.controller'
 import { AuthService } from './auth.service'
 
 import { UserModule } from '../User/user.module'
-import { HttpStrategy } from './Passport/strategies/http.strategy'
+import {JwtStrategy} from './Passport/strategies/jwt.strategy';
 
 @Module({
     controllers:[AuthController],
-    providers:[AuthService,HttpStrategy],
+    providers:[AuthService,JwtStrategy],
     imports:[UserModule]
 })
 export class AuthModule {}
