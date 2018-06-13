@@ -1,8 +1,8 @@
-import {Controller,Get} from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
 @Controller('articles')
-export class ArticleController{
-    @Get()
-    createArticle(){
-        return 'article api'
-    }
+export class ArticleController {
+  @Get()
+  createArticle() {
+    return 'article api';
+  }
 }
