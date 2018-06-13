@@ -2,7 +2,7 @@
   "name": "project",
   "version": "0.0.0",
   "description": "description",
-  "author": "",
+  "author": "Casey <qq1113143140@icloud.com>",
   "license": "MIT",
   "scripts": {
     "format": "prettier --write \"**/*.ts\"",
@@ -26,6 +26,7 @@
     "@nestjs/websockets": "^5.0.0",
     "fastify-formbody": "^2.0.0",
     "jsonwebtoken": "^8.2.2",
+    "mongoose": "^5.1.5",
     "passport": "^0.4.0",
     "passport-http-bearer": "^1.0.1",
     "passport-jwt": "^4.0.0",
@@ -63,5 +64,7 @@
       "^.+\\.(t|j)s$": "ts-jest"
     },
     "coverageDirectory": "../coverage"
-  }
+  },
+  "main": "index.js",
+  "repository": "https://github.com/casey1991/support.git"
 }

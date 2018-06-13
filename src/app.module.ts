@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import {MongooseModule} from '@nestjs/mongoose';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
@@ -7,7 +8,7 @@ import { ArticleModule } from './Article/article.module'
 
 
 @Module({
-  imports: [ArticleModule,AuthModule],
+  imports: [MongooseModule.forRoot('mongodb://localhost/nest'),ArticleModule,AuthModule],
   controllers: [AppController],
   providers: [AppService]
 })
