@@ -6,11 +6,11 @@ import { User } from './interfaces/user.interface';
 
 @Injectable()
 export class UserService {
-  constructor(@InjectModel('User') private readonly userModel: Model<User>) {}
+  constructor(@InjectModel('User') private readonly UserModel: Model<User>) {}
   async findOneByToken(token: string) {}
   async findOneByEmail(email: string) {}
   async create(createUserDto: CreateUserDto): Promise<User> {
-    const createdUser = this.userModel(createUserDto);
-    return createdUser.save();
+    const createdUser = new this.UserModel(createUserDto);
+    return await createdUser.save();
   }
 }
