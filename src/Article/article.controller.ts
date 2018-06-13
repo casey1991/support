@@ -1,7 +1,9 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Post, UseGuards } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 @Controller('articles')
 export class ArticleController {
-  @Get()
+  @Post()
+  @UseGuards(AuthGuard('jwt'))
   createArticle() {
     return 'article api';
   }

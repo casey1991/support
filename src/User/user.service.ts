@@ -8,7 +8,9 @@ import { User } from './interfaces/user.interface';
 export class UserService {
   constructor(@InjectModel('User') private readonly UserModel: Model<User>) {}
   async findOneByToken(token: string) {}
-  async findOneByEmail(email: string) {}
+  async findOneByEmail(email: string): Promise<User> {
+    return await this.UserModel.findOne({ email: email });
+  }
   async create(createUserDto: CreateUserDto): Promise<User> {
     const createdUser = new this.UserModel(createUserDto);
     return await createdUser.save();
