@@ -29,6 +29,7 @@
     "eslint": "^4.19.1",
     "fastify-formbody": "^2.0.0",
     "jsonwebtoken": "^8.2.2",
+    "lodash": "^4.17.10",
     "mongoose": "^5.1.5",
     "passport": "^0.4.0",
     "passport-http-bearer": "^1.0.1",
