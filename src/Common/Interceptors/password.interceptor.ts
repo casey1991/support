@@ -8,6 +8,11 @@ export class PasswordInterceptor implements NestInterceptor {
     context: ExecutionContext,
     call$: Observable<any>,
   ): Observable<any> {
+    // request we should encryption password
+    const request = context.switchToHttp().getRequest();
+    if (request && request.body && request.body.password) {
+      request.body.password = request.body.password; // we should encryption password here
+    }
     return call$.pipe(
       map(data => {
         if (_.isArray(data)) {

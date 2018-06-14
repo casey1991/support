@@ -1,8 +1,11 @@
 import * as jwt from 'jsonwebtoken';
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Post, Body, UseInterceptors } from '@nestjs/common';
 
 import { CreateTokenDto } from './dto/create-token.dto';
 import { AuthService } from './auth.service';
+import { PasswordInterceptor } from '../Common/Interceptors/password.interceptor';
+
+@UseInterceptors(PasswordInterceptor)
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
