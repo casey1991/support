@@ -22,7 +22,7 @@ export class PasswordInterceptor implements NestInterceptor {
           });
           return result;
         } else {
-          return data;
+          return _.omit(data, ['password']);
         }
       }),
     );
