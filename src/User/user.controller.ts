@@ -40,7 +40,7 @@ export class UserController {
   @UsePipes(new ValidationPipe())
   @UseGuards(AuthGuard('jwt'), RolesGuard)
   @Post()
-  @Roles('admin', 'superAdmin')
+  @Roles('superAdmin')
   async create(@Body() createUserDto: CreateUserDto): Promise<User> {
     return await this.userService.create(createUserDto);
   }
