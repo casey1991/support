@@ -8,13 +8,22 @@ import {
   UseGuards,
 } from '@nestjs/common';
 
+// services
 import { UserService } from './user.service';
+// dtos
 import { CreateUserDto } from './dto/create-user.dto';
+// interfaces
 import { User } from './interfaces/user.interface';
-import { ValidationPipe } from '../Common/Pipes/validation.pipe';
+// interceptors
 import { PasswordInterceptor } from '../Common/Interceptors/password.interceptor';
 import { MongooseToObject } from '../Common/Interceptors/mongoose-to-object.interceptor';
+// pipes
+import { ValidationPipe } from '../Common/Pipes/validation.pipe';
+// guards
 import { AuthGuard } from '@nestjs/passport';
+import { RolesGuard } from '../Common/Guards/roles.guards';
+// decorators
+import { Roles } from 'Common/Decorators/roles.decorator';
 
 @UseInterceptors(PasswordInterceptor)
 @UseInterceptors(MongooseToObject)
@@ -29,8 +38,9 @@ export class UserController {
   }
 
   @UsePipes(new ValidationPipe())
-  @UseGuards(AuthGuard('jwt'))
+  @UseGuards(AuthGuard('jwt'), RolesGuard)
   @Post()
+  @Roles('admin', 'superAdmin')
   async create(@Body() createUserDto: CreateUserDto): Promise<User> {
     return await this.userService.create(createUserDto);
   }
