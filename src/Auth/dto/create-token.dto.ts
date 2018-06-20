@@ -1,5 +1,10 @@
 import { IsEmail, IsString } from 'class-validator';
+import { ApiModelProperty } from '@nestjs/swagger';
 export class CreateTokenDto {
-  @IsEmail() email: string;
-  @IsString() password: string;
+  @ApiModelProperty()
+  @IsEmail()
+  email: string;
+  @ApiModelProperty()
+  @IsString()
+  password: string;
 }
