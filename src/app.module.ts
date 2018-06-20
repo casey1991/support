@@ -5,6 +5,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
+import { ConfigModule } from './Config/config.module';
 import { AuthModule } from './Auth/auth.module';
 import { UserModule } from './User/user.module';
 import { CatModule } from './Cat/cat.module';
@@ -12,6 +13,7 @@ import { ArticleModule } from './Article/article.module';
 
 @Module({
   imports: [
+    ConfigModule,
     GraphQLModule,
     MongooseModule.forRoot('mongodb://localhost/support'),
     AuthModule,
