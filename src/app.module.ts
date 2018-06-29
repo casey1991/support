@@ -1,5 +1,6 @@
 import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
-import { graphqlExpress } from 'apollo-server-express';
+import { TypeOrmModule } from '@nestjs/typeorm';
+// import { graphqlExpress } from 'apollo-server-express';
 import { GraphQLModule, GraphQLFactory } from '@nestjs/graphql';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AppController } from './app.controller';
@@ -8,13 +9,23 @@ import { AppService } from './app.service';
 import { ConfigModule } from './Config/config.module';
 import { AuthModule } from './Auth/auth.module';
 import { UserModule } from './User/user.module';
-import { CatModule } from './Cat/cat.module';
 import { ArticleModule } from './Article/article.module';
+
+import { UserEntitySubscriber } from './User/entities/user.subscriber';
 
 @Module({
   imports: [
     ConfigModule,
     GraphQLModule,
+    TypeOrmModule.forRoot({
+      type: 'mongodb',
+      host: 'localhost',
+      port: 27017,
+      database: 'support',
+      entities: [__dirname + '/../**/*.entity{.ts,.js}'],
+      synchronize: true,
+      subscribers: [UserEntitySubscriber],
+    }),
     MongooseModule.forRoot('mongodb://localhost/support'),
     AuthModule,
     UserModule,
