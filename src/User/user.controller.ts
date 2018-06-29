@@ -23,7 +23,7 @@ import { ValidationPipe } from '../Common/Pipes/validation.pipe';
 import { AuthGuard } from '@nestjs/passport';
 import { RolesGuard } from '../Common/Guards/roles.guards';
 // decorators
-import { Roles } from 'Common/Decorators/roles.decorator';
+import { Roles } from '../Common/Decorators/roles.decorator';
 
 @UseInterceptors(PasswordInterceptor)
 @UseInterceptors(MongooseToObject)
