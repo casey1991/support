@@ -9,6 +9,7 @@ import { ConfigModule } from './Config/config.module';
 import { AuthModule } from './Auth/auth.module';
 import { UserModule } from './User/user.module';
 import { CatModule } from './Cat/cat.module';
+import { SocketModel } from './Socket/socket.model';
 import { ArticleModule } from './Article/article.module';
 
 @Module({
@@ -19,6 +20,7 @@ import { ArticleModule } from './Article/article.module';
     AuthModule,
     UserModule,
     ArticleModule,
+    SocketModel,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -26,4 +26,12 @@ export class AuthService {
   async validateUser(email: string): Promise<any> {
     return await this.userService.findOneByEmail(email);
   }
+  async validateToken(token: string): Promise<any> {
+    const decoded = await jwt.verify(token, 'secretKey');
+    if (decoded.email) {
+      return await this.validateUser(decoded.email);
+    } else {
+      return null;
+    }
+  }
 }
