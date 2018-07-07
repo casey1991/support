@@ -1,6 +1,6 @@
 import { Controller, Post, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-@Controller('articles')
+@Controller('article')
 export class ArticleController {
   @Post()
   @UseGuards(AuthGuard('jwt'))

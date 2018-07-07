@@ -6,12 +6,15 @@ import {
   UsePipes,
   UseInterceptors,
   UseGuards,
+  Query,
+  Request,
 } from '@nestjs/common';
 
 // services
 import { UserService } from './user.service';
 // dtos
 import { CreateUserDto } from './dto/create-user.dto';
+import { FindUserDto } from './dto/findUser.dto';
 // interfaces
 import { User } from './interfaces/user.interface';
 // interceptors
@@ -27,14 +30,25 @@ import { Roles } from '../Common/Decorators/roles.decorator';
 
 @UseInterceptors(PasswordInterceptor)
 @UseInterceptors(MongooseToObject)
-@Controller('users')
+@Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @UseGuards(AuthGuard('jwt'))
-  @Get()
+  @Get('users')
   async getAll(): Promise<User[]> {
     return this.userService.getAll();
+  }
+  @UsePipes(new ValidationPipe())
+  @UseGuards(AuthGuard('jwt'))
+  @Get('')
+  async findUser(
+    @Request() req,
+    @Query() findUserDto: FindUserDto,
+  ): Promise<User> {
+    const currentUser = req.user;
+    if (!findUserDto.userId) findUserDto.userId = currentUser._id;
+    return this.userService.findUser(findUserDto);
   }
 
   @UsePipes(new ValidationPipe())
