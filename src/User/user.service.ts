@@ -5,14 +5,13 @@ import { Model } from 'mongoose';
 import { CreateUserDto } from './dto/create-user.dto';
 import { FindUserDto } from './dto/findUser.dto';
 
-import { User } from './interfaces/user.interface';
-
+import { User } from './entities/user.entity';
 @Injectable()
 export class UserService {
   constructor(@InjectModel('User') private readonly UserModel: Model<User>) {}
   async findOneByToken(token: string) {}
   async findOneByEmail(email: string): Promise<User> {
-    return await this.UserModel.findOne({ email: email });
+    return await this.UserModel.findOne({ email: email }).exec();
   }
   async create(createUserDto: CreateUserDto): Promise<User> {
     const createdUser = new this.UserModel(createUserDto);
@@ -22,7 +21,7 @@ export class UserService {
     return await this.UserModel.find().exec();
   }
   async findUser(findUserDto: FindUserDto): Promise<User> {
-    const user = await this.UserModel.findOne(findUserDto.userId).exec();
+    const user = await this.UserModel.findOne({ _id: findUserDto._id }).exec();
     return user;
   }
 }

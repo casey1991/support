@@ -6,21 +6,23 @@ import {
   UseInterceptors,
   Pipe,
   UsePipes,
+  UseFilters,
 } from '@nestjs/common';
 
 import { CreateTokenDto } from './dto/create-token.dto';
 import { SignUpDto } from './dto/signup.dto';
 
-import { User } from '../User/interfaces/user.interface';
+import { User } from '../User/entities/user.entity';
 
 import { AuthService } from './auth.service';
 import { PasswordInterceptor } from '../Common/Interceptors/password.interceptor';
 import { UserService } from '../User/user.service';
 import { ValidationPipe } from '../Common/Pipes/validation.pipe';
 import { MongooseToObject } from '../Common/Interceptors/mongoose-to-object.interceptor';
+import { HttpExceptionFilter } from '../Common/Filters/http.exception.filter';
 
-@UseInterceptors(PasswordInterceptor)
-@UseInterceptors(MongooseToObject)
+@UseInterceptors(MongooseToObject, PasswordInterceptor)
+@UseFilters(HttpExceptionFilter)
 @Controller('auth')
 export class AuthController {
   constructor(

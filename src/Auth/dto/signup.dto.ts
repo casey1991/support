@@ -1,6 +1,7 @@
 import { IsEmail, IsString, Length } from 'class-validator';
 import { ApiModelProperty } from '@nestjs/swagger';
-export class SignUpDto {
+import { User } from '../../User/entities/user.entity';
+export class SignUpDto extends User {
   @ApiModelProperty()
   @IsString()
   name: string;

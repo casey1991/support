@@ -8,6 +8,7 @@ import {
   UseGuards,
   Query,
   Request,
+  UseFilters,
 } from '@nestjs/common';
 
 // services
@@ -16,7 +17,7 @@ import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { FindUserDto } from './dto/findUser.dto';
 // interfaces
-import { User } from './interfaces/user.interface';
+import { User } from './entities/user.entity';
 // interceptors
 import { PasswordInterceptor } from '../Common/Interceptors/password.interceptor';
 import { MongooseToObject } from '../Common/Interceptors/mongoose-to-object.interceptor';
@@ -27,9 +28,12 @@ import { AuthGuard } from '@nestjs/passport';
 import { RolesGuard } from '../Common/Guards/roles.guards';
 // decorators
 import { Roles } from '../Common/Decorators/roles.decorator';
+// filters
+import { HttpExceptionFilter } from '../Common/Filters/http.exception.filter';
 
 @UseInterceptors(PasswordInterceptor)
 @UseInterceptors(MongooseToObject)
+@UseFilters(HttpExceptionFilter)
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
@@ -47,14 +51,14 @@ export class UserController {
     @Query() findUserDto: FindUserDto,
   ): Promise<User> {
     const currentUser = req.user;
-    if (!findUserDto.userId) findUserDto.userId = currentUser._id;
+    if (!findUserDto._id) findUserDto._id = currentUser._id;
     return this.userService.findUser(findUserDto);
   }
 
   @UsePipes(new ValidationPipe())
   @UseGuards(AuthGuard('jwt'), RolesGuard)
-  @Post()
   @Roles('superAdmin')
+  @Post()
   async create(@Body() createUserDto: CreateUserDto): Promise<User> {
     return await this.userService.create(createUserDto);
   }
