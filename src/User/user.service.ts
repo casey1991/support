@@ -6,6 +6,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { FindUserDto } from './dto/findUser.dto';
 
 import { User } from './entities/user.entity';
+import { mongoPromiseHandler } from '../Common/utils/mongo-promise-handler';
 @Injectable()
 export class UserService {
   constructor(@InjectModel('User') private readonly UserModel: Model<User>) {}
@@ -15,7 +16,8 @@ export class UserService {
   }
   async create(createUserDto: CreateUserDto): Promise<User> {
     const createdUser = new this.UserModel(createUserDto);
-    return await createdUser.save();
+    const user = await mongoPromiseHandler(createdUser.save());
+    return user;
   }
   async getAll(): Promise<User[]> {
     return await this.UserModel.find().exec();
