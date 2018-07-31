@@ -11,6 +11,7 @@ import { UserModule } from './User/user.module';
 import { CatModule } from './Cat/cat.module';
 import { SocketModel } from './Socket/socket.model';
 import { ArticleModule } from './Article/article.module';
+import { FileModule } from './File/file.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { ArticleModule } from './Article/article.module';
     UserModule,
     ArticleModule,
     SocketModel,
+    FileModule,
   ],
   controllers: [AppController],
   providers: [AppService],
