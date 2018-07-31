@@ -4,9 +4,13 @@ import { FileLocalStore } from './services/file.localstore';
 import { FileService } from './file.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { FileSchema } from './schemas/file.schema';
+import { ConfigModule } from '../Config/config.module';
 
 @Module({
-  imports: [MongooseModule.forFeature([{ name: 'File', schema: FileSchema }])],
+  imports: [
+    ConfigModule,
+    MongooseModule.forFeature([{ name: 'File', schema: FileSchema }]),
+  ],
   controllers: [FileController],
   providers: [FileService, FileLocalStore],
   exports: [FileService],

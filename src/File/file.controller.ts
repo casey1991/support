@@ -6,6 +6,7 @@ import {
   UploadedFile,
 } from '@nestjs/common';
 import { FileService } from './file.service';
+import { ConfigService } from '../Config/config.service';
 import { FileLocalStore } from './services/file.localstore';
 
 // dto
@@ -14,6 +15,7 @@ import { FileCreateDto } from './dto/file.create.dto';
 @Controller('file')
 export class FileController {
   constructor(
+    private readonly configService: ConfigService,
     private readonly fileService: FileService,
     private readonly fileLocalStore: FileLocalStore,
   ) {}
@@ -27,11 +29,10 @@ export class FileController {
     fileDto.size = file.size;
     // return await this.fileService.createFile(fileDto);
     const result = await this.fileLocalStore.writeFileAsync(
-      fileDto.mimetype,
+      'assets/' + fileDto.mimetype,
       fileDto.name,
       fileDto.fileMeta,
     );
-    console.log(result);
   }
 
   @Post('uploads')
