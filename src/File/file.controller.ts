@@ -22,17 +22,22 @@ export class FileController {
   @Post('upload')
   @UseInterceptors(FileInterceptor('file'))
   async upload(@UploadedFile() file) {
-    const fileDto = new FileCreateDto();
-    fileDto.fileMeta = file.buffer;
-    fileDto.name = file.originalname;
-    fileDto.mimetype = file.mimetype;
-    fileDto.size = file.size;
+    const mimetype = file.mimetype;
+    const name = file.originalname;
+    const size = file.size;
+    const fileMetaBuffer = file.buffer;
     // return await this.fileService.createFile(fileDto);
-    const result = await this.fileLocalStore.writeFileAsync(
-      'assets/' + fileDto.mimetype,
-      fileDto.name,
-      fileDto.fileMeta,
+    const fileMeta = await this.fileLocalStore.writeFileAsync(
+      'assets/' + mimetype,
+      name,
+      fileMetaBuffer,
     );
+    const fileDto = new FileCreateDto();
+    fileDto.name = name;
+    fileDto.size = size;
+    fileDto.fileMeta = fileMeta;
+    fileDto.mimetype = mimetype;
+    return await this.fileService.createFile(fileDto);
   }
 
   @Post('uploads')

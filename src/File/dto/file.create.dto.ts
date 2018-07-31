@@ -1,6 +1,6 @@
 export class FileCreateDto {
   name: string;
   mimetype: string;
-  fileMeta: Buffer;
+  fileMeta: any;
   size: number;
 }
