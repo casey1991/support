@@ -9,3 +9,6 @@ node_modules/
 
 # ignore dist file
 dist/
+
+# ignore assets file
+assets/
