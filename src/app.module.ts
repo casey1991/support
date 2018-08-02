@@ -9,6 +9,7 @@ import { ConfigModule } from './Config/config.module';
 import { AuthModule } from './Auth/auth.module';
 import { UserModule } from './User/user.module';
 import { CatModule } from './Cat/cat.module';
+import { ChatModule } from './Chat/chat.module';
 import { SocketModel } from './Socket/socket.model';
 import { ArticleModule } from './Article/article.module';
 import { FileModule } from './File/file.module';
@@ -20,6 +21,7 @@ import { FileModule } from './File/file.module';
     MongooseModule.forRoot('mongodb://localhost/support'),
     AuthModule,
     UserModule,
+    ChatModule,
     ArticleModule,
     SocketModel,
     FileModule,

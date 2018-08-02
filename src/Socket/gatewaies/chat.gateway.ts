@@ -7,11 +7,11 @@ import {
   WsException,
 } from '@nestjs/websockets';
 import { UseGuards } from '@nestjs/common';
-import { SocketAuthGuard } from '../Common/Guards/socket.auth.guard';
-import { AuthService } from '../Auth/auth.service';
+import { SocketAuthGuard } from '../../Common/Guards/socket.auth.guard';
+import { AuthService } from '../../Auth/auth.service';
 
-@WebSocketGateway()
-export class SocketGateway
+@WebSocketGateway({ namespace: 'CHAT' })
+export class ChatGateway
   implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
   constructor(private readonly authService: AuthService) {}
   afterInit(server) {
