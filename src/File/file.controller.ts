@@ -5,6 +5,7 @@ import {
   Post,
   Get,
   Query,
+  UsePipes,
 } from '@nestjs/common';
 import {
   UseInterceptors,
@@ -20,6 +21,7 @@ import { FileLocalStore } from './services/file.localstore';
 // dto
 import { FileCreateDto } from './dto/file.create.dto';
 import { FileSearchDto } from './dto/file.search.dto';
+import { ValidationPipe } from 'Common/Pipes/validation.pipe';
 
 @Controller('file')
 export class FileController {
@@ -56,8 +58,10 @@ export class FileController {
     console.log(files);
   }
 
+  @UsePipes(ValidationPipe)
   @Get()
-  async getFile(@Request() req, @Query() fileSearchDto: FileSearchDto) {
-    const storeFile = await this.fileService.getFile(fileSearchDto);
+  async getFile(@Query() fileSearchDto: FileSearchDto) {
+    const file = await this.fileService.getFile(fileSearchDto);
+    return file;
   }
 }

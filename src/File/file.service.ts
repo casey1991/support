@@ -17,5 +17,9 @@ export class FileService {
     const result = await this.FileModel.insertMany(files);
     return result;
   }
-  async getFile(fileSearchDto: FileSearchDto) {}
+  async getFile(fileSearchDto: FileSearchDto) {
+    const _id = fileSearchDto._id;
+    const file = await this.FileModel.findById(_id);
+    return file;
+  }
 }
