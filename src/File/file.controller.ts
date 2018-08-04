@@ -21,7 +21,7 @@ import { FileLocalStore } from './services/file.localstore';
 // dto
 import { FileCreateDto } from './dto/file.create.dto';
 import { FileSearchDto } from './dto/file.search.dto';
-import { ValidationPipe } from 'Common/Pipes/validation.pipe';
+import { ValidationPipe } from '../Common/Pipes/validation.pipe';
 
 @Controller('file')
 export class FileController {
