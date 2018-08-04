@@ -4,6 +4,7 @@ import { Model } from 'mongoose';
 import { File } from './entities/file.entity';
 // dtos
 import { FileCreateDto } from './dto/file.create.dto';
+import { FileSearchDto } from './dto/file.search.dto';
 
 @Injectable()
 export class FileService {
@@ -16,4 +17,5 @@ export class FileService {
     const result = await this.FileModel.insertMany(files);
     return result;
   }
+  async getFile(fileSearchDto: FileSearchDto) {}
 }

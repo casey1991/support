@@ -1,7 +1,15 @@
-import { Controller, Post, FilesInterceptor } from '@nestjs/common';
+import {
+  Controller,
+  Request,
+  Response,
+  Post,
+  Get,
+  Query,
+} from '@nestjs/common';
 import {
   UseInterceptors,
   FileInterceptor,
+  FilesInterceptor,
   UploadedFiles,
   UploadedFile,
 } from '@nestjs/common';
@@ -11,6 +19,7 @@ import { FileLocalStore } from './services/file.localstore';
 
 // dto
 import { FileCreateDto } from './dto/file.create.dto';
+import { FileSearchDto } from './dto/file.search.dto';
 
 @Controller('file')
 export class FileController {
@@ -44,5 +53,15 @@ export class FileController {
   @UseInterceptors(FilesInterceptor('files'))
   async uploads(@UploadedFiles() files) {
     console.log(files);
+  }
+
+  // @Get()
+  // async getFile(@Request() req, @Query() fileSearchDto: FileSearchDto) {
+  //   const storeFile = await this.fileService.getFile(fileSearchDto);
+  // }
+  @Get()
+  async getAsset(@Response() res) {
+    res.sendFile('./../assets/image/gif/img.gif');
+    // return 'hei';
   }
 }
