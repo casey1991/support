@@ -1,6 +1,4 @@
 import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
-import { graphqlExpress } from 'apollo-server-express';
-import { GraphQLModule, GraphQLFactory } from '@nestjs/graphql';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -17,8 +15,7 @@ import { FileModule } from './File/file.module';
 @Module({
   imports: [
     ConfigModule,
-    GraphQLModule,
-    MongooseModule.forRoot('mongodb://localhost/support'),
+    MongooseModule.forRoot('mongodb://localhost:27017/support'),
     AuthModule,
     UserModule,
     ChatModule,
@@ -30,12 +27,5 @@ import { FileModule } from './File/file.module';
   providers: [AppService],
 })
 export class AppModule implements NestModule {
-  constructor(private readonly graphQLFactory: GraphQLFactory) {}
-  configure(comsumer: MiddlewareConsumer) {
-    // const typeDefs = this.graphQLFactory.mergeTypesByPaths('./**/*.graphql');
-    // const schema = this.graphQLFactory.createSchema({ typeDefs });
-    // comsumer
-    // .apply(graphqlExpress(req => ({ schema, rootValue: req })))
-    // .forRoutes('/graphql');
-  }
+  configure(comsumer: MiddlewareConsumer) {}
 }
