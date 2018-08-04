@@ -5,6 +5,7 @@ import { File } from './entities/file.entity';
 // dtos
 import { FileCreateDto } from './dto/file.create.dto';
 import { FileSearchDto } from './dto/file.search.dto';
+import { FilesSearchDto } from './dto/files.search.dto';
 
 @Injectable()
 export class FileService {
@@ -21,5 +22,12 @@ export class FileService {
     const _id = fileSearchDto._id;
     const file = await this.FileModel.findById(_id);
     return file;
+  }
+  async getFiles(filesSearchDto: FilesSearchDto) {
+    const _ids = filesSearchDto._ids;
+    const query = this.FileModel.find({});
+    query.where('_id').in(_ids);
+    const files = await query.exec();
+    return files;
   }
 }
