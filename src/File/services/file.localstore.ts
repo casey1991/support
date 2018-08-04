@@ -3,12 +3,12 @@ import * as fs from 'fs-extra';
 
 @Injectable()
 export class FileLocalStore {
-  writeFileAsync(path, name, data) {
-    const filePath = path + '/' + name;
+  writeFileAsync(folder, path, name, data) {
+    const filePath = folder + '/' + path + '/' + name;
     return new Promise((resolve, reject) => {
       fs.outputFile(filePath, data, error => {
         if (error) reject(error);
-        resolve(filePath);
+        resolve(path + '/' + name);
       });
     });
   }

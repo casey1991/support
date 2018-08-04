@@ -37,7 +37,8 @@ export class FileController {
     const fileMetaBuffer = file.buffer;
     // return await this.fileService.createFile(fileDto);
     const fileMeta = await this.fileLocalStore.writeFileAsync(
-      'assets/' + mimetype,
+      'assets',
+      mimetype,
       name,
       fileMetaBuffer,
     );
@@ -55,13 +56,8 @@ export class FileController {
     console.log(files);
   }
 
-  // @Get()
-  // async getFile(@Request() req, @Query() fileSearchDto: FileSearchDto) {
-  //   const storeFile = await this.fileService.getFile(fileSearchDto);
-  // }
   @Get()
-  async getAsset(@Response() res) {
-    res.sendFile('./../assets/image/gif/img.gif');
-    // return 'hei';
+  async getFile(@Request() req, @Query() fileSearchDto: FileSearchDto) {
+    const storeFile = await this.fileService.getFile(fileSearchDto);
   }
 }
