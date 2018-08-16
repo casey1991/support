@@ -17,16 +17,25 @@ import { AuthGuard } from '@nestjs/passport';
 
 @UseInterceptors(MongooseToObject, PasswordInterceptor)
 @UseFilters(HttpExceptionFilter)
-@Controller('auth')
+@Controller('chat')
 export class ChatController {
   constructor(private readonly chatService: ChatService) {}
   @UseGuards(AuthGuard('jwt'))
   @Post('')
-  createRoom(@Request() req, @Body() room: RoomCreateDto) {
+  async createRoom(@Request() req, @Body() room: RoomCreateDto) {
     const currentUser = req.user;
     if (!room.host) {
       room.host = currentUser._id;
     }
-    this.chatService.createRoom(room);
+    return await this.chatService.createRoom(room);
+  }
+  @UseGuards(AuthGuard('jwt'))
+  @Post('message')
+  async createMessage(@Request() req, @Body() message) {
+    const currentUser = req.user;
+    if (!message.user) {
+      message.user = currentUser._id;
+    }
+    return await this.chatService.createMessage(message);
   }
 }
