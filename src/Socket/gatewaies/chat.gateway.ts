@@ -5,15 +5,24 @@ import {
   OnGatewayConnection,
   OnGatewayDisconnect,
   WsException,
+  WebSocketServer,
 } from '@nestjs/websockets';
 import { UseGuards } from '@nestjs/common';
 import { SocketAuthGuard } from '../../Common/Guards/socket.auth.guard';
 import { AuthService } from '../../Auth/auth.service';
+import { ChatService } from '../../Chat/chat.service';
+
+import { MessageCreateDto } from '../../Chat/dto/message.create.dto';
 
 @WebSocketGateway({ namespace: 'CHAT' })
 export class ChatGateway
   implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    private readonly authService: AuthService,
+    private readonly chatService: ChatService,
+  ) {}
+  @WebSocketServer()
+  server;
   afterInit(server) {
     server.use((socket, next) => {
       const token = socket.handshake.query.token;
@@ -35,8 +44,10 @@ export class ChatGateway
     console.log('disconnected', client.user._id);
   }
   @UseGuards(SocketAuthGuard)
-  @SubscribeMessage('events')
-  onEvent(client, data) {
-    console.log(client.user.email + ':', data);
+  @SubscribeMessage('sendMessage')
+  async onEvent(client, message: MessageCreateDto) {
+    console.log(client.user.email + ':', message);
+    const result = await this.chatService.createMessage(message);
+    this.server.emit('CHAT' + message.room, message);
   }
 }

@@ -10,6 +10,6 @@ import { ChatService } from './chat.service';
   imports: [MongooseModule.forFeature([{ name: 'Room', schema: RoomSchema }])],
   controllers: [ChatController],
   providers: [ChatService],
-  exports: [],
+  exports: [ChatService],
 })
 export class ChatModule {}
