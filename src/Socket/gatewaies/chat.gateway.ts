@@ -10,16 +10,16 @@ import {
 import { UseGuards } from '@nestjs/common';
 import { SocketAuthGuard } from '../../Common/Guards/socket.auth.guard';
 import { AuthService } from '../../Auth/auth.service';
-import { ChatService } from '../../Chat/chat.service';
+import { MessageService } from '../../Chat/Message/message.service';
 
-import { MessageCreateDto } from '../../Chat/dto/message.create.dto';
+import { MessageCreateDto } from '../../Chat/Message/dto/message.create.dto';
 
 @WebSocketGateway({ namespace: 'CHAT' })
 export class ChatGateway
   implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
   constructor(
     private readonly authService: AuthService,
-    private readonly chatService: ChatService,
+    private readonly messageService: MessageService,
   ) {}
   @WebSocketServer()
   server;
@@ -47,7 +47,7 @@ export class ChatGateway
   @SubscribeMessage('sendMessage')
   async onEvent(client, message: MessageCreateDto) {
     console.log(client.user.email + ':', message);
-    const result = await this.chatService.createMessage(message);
+    const result = await this.messageService.createMessage(message);
     this.server.emit('CHAT' + message.room, message);
   }
 }

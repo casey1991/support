@@ -1,15 +1,10 @@
 import { Module, Global } from '@nestjs/common';
-import { MongooseModule } from '@nestjs/mongoose';
-import { RoomSchema } from './schemas/room.schema';
 
-import { ChatController } from './chat.controller';
-import { ChatService } from './chat.service';
+import { MessageModule } from './Message/message.module';
+import { RoomModule } from './Room/room.module';
 
 @Global()
 @Module({
-  imports: [MongooseModule.forFeature([{ name: 'Room', schema: RoomSchema }])],
-  controllers: [ChatController],
-  providers: [ChatService],
-  exports: [ChatService],
+  imports: [MessageModule, RoomModule],
 })
 export class ChatModule {}

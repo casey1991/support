@@ -1,10 +1,9 @@
 import * as mongoose from 'mongoose';
-import { MessageSchema } from './message.schema';
+
 const Schema = mongoose.Schema;
 export const RoomSchema = new mongoose.Schema({
-  name: { type: Schema.Types.String, required: true, unique: true },
+  name: { type: Schema.Types.String, required: true },
   avatar: { type: Schema.Types.ObjectId, ref: 'File' },
-  user: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+  users: [{ type: Schema.Types.ObjectId, ref: 'User' }],
   host: { type: Schema.Types.ObjectId, ref: 'User' },
-  messages: [MessageSchema],
 });
