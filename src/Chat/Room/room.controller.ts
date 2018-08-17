@@ -3,6 +3,7 @@ import {
   UseInterceptors,
   UseFilters,
   UseGuards,
+  UsePipes,
 } from '@nestjs/common';
 import { Request, Post, Body, Get, Query } from '@nestjs/common';
 
@@ -15,6 +16,7 @@ import { RoomService } from './room.service';
 import { RoomCreateDto } from './dto/room.create.dto';
 import { RoomSearchDto } from './dto/room.search.dto';
 import { AuthGuard } from '@nestjs/passport';
+import { ValidationPipe } from '../../Common/Pipes/validation.pipe';
 
 @UseInterceptors(MongooseToObject, PasswordInterceptor)
 @UseFilters(HttpExceptionFilter)
@@ -30,11 +32,13 @@ export class ChatController {
     }
     return await this.service.createRoom(room);
   }
+  @UseGuards(AuthGuard('jwt'))
+  @UsePipes(ValidationPipe)
   @Get('rooms')
   async searchRooms(@Request() req, @Query() searchs: RoomSearchDto) {
     const currentUser = req.user;
     if (!searchs._userIds || searchs._userIds.length < 0) {
-      searchs._userIds.push(currentUser);
+      searchs._userIds = [currentUser._id];
     }
     return await this.service.searchRooms(searchs);
   }
