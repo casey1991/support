@@ -4,7 +4,7 @@ import {
   UseFilters,
   UseGuards,
 } from '@nestjs/common';
-import { Request, Post, Body } from '@nestjs/common';
+import { Request, Post, Body, Get, Query } from '@nestjs/common';
 
 import { PasswordInterceptor } from '../../Common/Interceptors/password.interceptor';
 import { MongooseToObject } from '../../Common/Interceptors/mongoose-to-object.interceptor';
@@ -13,6 +13,7 @@ import { RoomService } from './room.service';
 
 // dtos
 import { RoomCreateDto } from './dto/room.create.dto';
+import { RoomSearchDto } from './dto/room.search.dto';
 import { AuthGuard } from '@nestjs/passport';
 
 @UseInterceptors(MongooseToObject, PasswordInterceptor)
@@ -28,5 +29,13 @@ export class ChatController {
       room.host = currentUser._id;
     }
     return await this.service.createRoom(room);
+  }
+  @Get('rooms')
+  async searchRooms(@Request() req, @Query() searchs: RoomSearchDto) {
+    const currentUser = req.user;
+    if (!searchs._userIds || searchs._userIds.length < 0) {
+      searchs._userIds.push(currentUser);
+    }
+    return await this.service.searchRooms(searchs);
   }
 }
