@@ -15,6 +15,6 @@ export class MessageService {
     const query = this.Model.find({});
     query.where('room').equals(searchs.room);
     query.populate('user');
-    return await query.exec();
+    return await this.Model.paginate(query, { offset: 0, limit: 1 });
   }
 }

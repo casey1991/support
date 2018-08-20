@@ -1,4 +1,5 @@
 import * as mongoose from 'mongoose';
+import * as mongoosePaginate from 'mongoose-paginate';
 
 const Schema = mongoose.Schema;
 export const RoomSchema = new mongoose.Schema({
@@ -7,3 +8,5 @@ export const RoomSchema = new mongoose.Schema({
   users: [{ type: Schema.Types.ObjectId, ref: 'User' }],
   host: { type: Schema.Types.ObjectId, ref: 'User' },
 });
+
+RoomSchema.plugin(mongoosePaginate);
