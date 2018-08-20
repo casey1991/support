@@ -34,6 +34,6 @@ export class MessageController {
   @UseGuards(AuthGuard('jwt'))
   @Get('messages')
   async getMessages(@Request() req, @Query() searchs: MessageSearchDto) {
-    this.service.searchMessage(searchs);
+    return await this.service.searchMessage(searchs);
   }
 }

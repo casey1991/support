@@ -12,9 +12,9 @@ export class MessageService {
     return await this.Model.create(message);
   }
   async searchMessage(searchs: MessageSearchDto) {
-    const room = await this.Model.find({});
-    if (room) {
-    }
-    return [];
+    const query = this.Model.find({});
+    query.where('room').equals(searchs.room);
+    query.populate('user');
+    return await query.exec();
   }
 }
