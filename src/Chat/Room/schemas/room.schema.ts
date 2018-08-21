@@ -7,6 +7,7 @@ export const RoomSchema = new mongoose.Schema({
   avatar: { type: Schema.Types.ObjectId, ref: 'File' },
   users: [{ type: Schema.Types.ObjectId, ref: 'User' }],
   host: { type: Schema.Types.ObjectId, ref: 'User' },
+  createdAt: { type: Date, default: Date.now },
 });
 
 RoomSchema.plugin(mongoosePaginate);

@@ -6,6 +6,7 @@ export const MessageSchema = new mongoose.Schema({
   room: { type: Schema.Types.ObjectId, required: true, ref: 'Room' },
   data: { type: Schema.Types.Mixed },
   text: { type: String },
+  createdAt: { type: Date, default: Date.now },
   type: { type: Number, required: true },
 });
 MessageSchema.plugin(mongoosePaginate);
