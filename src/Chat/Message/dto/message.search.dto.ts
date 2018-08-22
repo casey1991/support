@@ -1,12 +1,19 @@
-import { IsOptional, IsNumber, IsArray } from 'class-validator';
+import { IsOptional, IsNumber, IsArray, IsString } from 'class-validator';
 import { ApiModelProperty } from '@nestjs/swagger';
 export class MessageSearchDto {
   @ApiModelProperty()
   @IsOptional()
   @IsArray()
   users: string[];
+  @IsOptional()
   @IsNumber()
   type: number[];
-  @IsArray()
+  @IsString()
   room: string;
+  @IsOptional()
+  @IsString()
+  limit: number;
+  @IsOptional()
+  @IsString()
+  offset: number;
 }
