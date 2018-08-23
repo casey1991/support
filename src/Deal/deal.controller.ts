@@ -12,11 +12,11 @@ import {
 } from '@nestjs/common';
 
 // services
-import { ShopService } from './shop.service';
+import { ShopService } from './deal.service';
 // dtos
-import { ShopCreateDto } from './dto/shop.create.dto';
+import { DealCreateDto } from './dto/deal.create.dto';
 // interfaces
-import { Shop } from './interfaces/shop.interface';
+import { Deal } from './interfaces/deal.interface';
 // interceptors
 import { PasswordInterceptor } from 'Common/Interceptors/password.interceptor';
 import { MongooseToObject } from 'Common/Interceptors/mongoose-to-object.interceptor';
@@ -31,7 +31,7 @@ import { HttpExceptionFilter } from 'Common/Filters/http.exception.filter';
 @UseInterceptors(PasswordInterceptor)
 @UseInterceptors(MongooseToObject)
 @UseFilters(HttpExceptionFilter)
-@Controller('shop')
-export class ShopController {
+@Controller('deal')
+export class DealController {
   constructor(private readonly shopService: ShopService) {}
 }
