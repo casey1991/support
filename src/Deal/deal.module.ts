@@ -10,4 +10,4 @@ import { DealSchema } from './schemas/deal.schema';
   providers: [DealService],
   exports: [DealService],
 })
-export class ShopModule {}
+export class DealModule {}
