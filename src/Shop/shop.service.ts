@@ -11,6 +11,6 @@ import { mongoPromiseHandler } from 'Common/utils/mongo-promise-handler';
 export class ShopService {
   constructor(@InjectModel('Shop') private readonly ShopModel: Model<Shop>) {}
   async create(dto: ShopCreateDto): Promise<Shop> {
-    return [];
+    return await this.ShopModel.create(dto);
   }
 }
