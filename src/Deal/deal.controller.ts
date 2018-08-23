@@ -12,7 +12,7 @@ import {
 } from '@nestjs/common';
 
 // services
-import { ShopService } from './deal.service';
+import { DealService } from './deal.service';
 // dtos
 import { DealCreateDto } from './dto/deal.create.dto';
 // interfaces
@@ -33,5 +33,9 @@ import { HttpExceptionFilter } from 'Common/Filters/http.exception.filter';
 @UseFilters(HttpExceptionFilter)
 @Controller('deal')
 export class DealController {
-  constructor(private readonly shopService: ShopService) {}
+  constructor(private readonly service: DealService) {}
+  @UseGuards(AuthGuard('jwt'))
+  @UsePipes(ValidationPipe)
+  @Post()
+  async createDeal(@Request() req, @Body() deal: DealCreateDto) {}
 }
