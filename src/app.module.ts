@@ -11,6 +11,7 @@ import { SocketModel } from './Socket/socket.model';
 import { ArticleModule } from './Article/article.module';
 import { FileModule } from './File/file.module';
 import { DealModule } from './Deal/deal.module';
+import { ShopModule } from './Shop/shop.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { DealModule } from './Deal/deal.module';
     SocketModel,
     FileModule,
     DealModule,
+    ShopModule,
   ],
   controllers: [AppController],
   providers: [AppService],
