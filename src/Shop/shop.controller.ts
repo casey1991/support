@@ -15,6 +15,7 @@ import {
 import { ShopService } from './shop.service';
 // dtos
 import { ShopCreateDto } from './dto/shop.create.dto';
+import { ShopAddItemDto } from './dto/shop.add.item.dto';
 // interfaces
 import { Shop } from './interfaces/shop.interface';
 // interceptors
@@ -42,4 +43,8 @@ export class ShopController {
     if (!dto.host) dto.host = currentUser._id;
     return await this.service.create(dto);
   }
+  @UseGuards(AuthGuard('jwt'))
+  @UsePipes(ValidationPipe)
+  @Post('item')
+  async addItem(@Request() req, @Body() dto: ShopAddItemDto) {}
 }
