@@ -8,7 +8,6 @@ import {
   WebSocketServer,
 } from '@nestjs/websockets';
 import { UseGuards } from '@nestjs/common';
-import { SocketAuthGuard } from '../../Common/Guards/socket.auth.guard';
 import { AuthService } from '../../Auth/auth.service';
 import { MessageService } from '../../Chat/Message/message.service';
 
@@ -43,7 +42,6 @@ export class ChatGateway
   handleDisconnect(client) {
     console.log('disconnected', client.user._id);
   }
-  @UseGuards(SocketAuthGuard)
   @SubscribeMessage('sendMessage')
   async onEvent(client, message: MessageCreateDto) {
     console.log(client.user.email + ':', message);
