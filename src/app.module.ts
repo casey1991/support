@@ -3,6 +3,8 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
+import { GraphQLModule } from '@nestjs/graphql';
+
 import { ConfigModule } from './Config/config.module';
 import { AuthModule } from './Auth/auth.module';
 import { UserModule } from './User/user.module';
@@ -12,6 +14,7 @@ import { ArticleModule } from './Article/article.module';
 import { FileModule } from './File/file.module';
 import { DealModule } from './Deal/deal.module';
 import { ShopModule } from './Shop/shop.module';
+import { CatModule } from './Cat/cat.module';
 
 @Module({
   imports: [
@@ -20,11 +23,16 @@ import { ShopModule } from './Shop/shop.module';
     AuthModule,
     UserModule,
     ChatModule,
+    CatModule,
     ArticleModule,
     SocketModel,
     FileModule,
     DealModule,
     ShopModule,
+    GraphQLModule.forRoot({
+      typePaths: ['./**/*.graphql'],
+      installSubscriptionHandlers: true,
+    }),
   ],
   controllers: [AppController],
   providers: [AppService],
