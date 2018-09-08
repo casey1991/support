@@ -1,0 +1,27 @@
+type Message {
+  id: String!
+  user: User!
+  room: Room!
+  text: String
+}
+type Room {
+  id: String!
+  users: [User]
+  name: String!
+  messages: [Message]
+}
+type User {
+  id: String!
+  name: String!
+  email: String!
+  password: String!
+}
+
+type Query {
+  message(id: String!): Message
+  messages: [Message]
+  room(id: String!): Room
+  rooms: [Room]
+  user(id: String!): User
+  users: [User]
+}
