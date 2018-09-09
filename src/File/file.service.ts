@@ -18,16 +18,12 @@ export class FileService {
     const result = await this.FileModel.insertMany(files);
     return result;
   }
-  async getFile(fileSearchDto: FileSearchDto) {
-    const _id = fileSearchDto._id;
-    const file = await this.FileModel.findById(_id);
+  async getFile(id: string) {
+    const file = await this.FileModel.findById(id);
     return file;
   }
-  async getFiles(filesSearchDto: FilesSearchDto) {
-    const _ids = filesSearchDto._ids;
+  async getFiles() {
     const query = this.FileModel.find({});
-    query.where('_id').in(_ids);
-    const files = await query.exec();
-    return files;
+    return await query.exec();
   }
 }

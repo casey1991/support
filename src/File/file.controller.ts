@@ -64,12 +64,11 @@ export class FileController {
   @UsePipes(ValidationPipe)
   @Get()
   async getFile(@Query() fileSearchDto: FileSearchDto) {
-    const file = await this.fileService.getFile(fileSearchDto);
-    return file;
+    return {};
   }
   @Get('files')
   async getFiles(@Query() filesSearchDto: FilesSearchDto) {
-    const files = await this.fileService.getFiles(filesSearchDto);
-    return files;
+    // const files = await this.fileService.getFiles(filesSearchDto);
+    return [];
   }
 }

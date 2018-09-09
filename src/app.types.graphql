@@ -16,6 +16,13 @@ type User {
   email: String!
   password: String!
 }
+type File {
+  id: String!
+  mimetype: String!
+  name: String!
+  fileMeta: String!
+  size: String!
+}
 
 type Query {
   message(id: String!): Message
@@ -24,4 +31,6 @@ type Query {
   rooms: [Room]
   user(id: String!): User
   users: [User]
+  file(id: String!): File
+  files: [File]
 }
