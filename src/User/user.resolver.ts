@@ -5,26 +5,16 @@ import {
   Args,
   Parent,
 } from '@nestjs/graphql';
-import { find, filter } from 'lodash';
-const users = [
-  {
-    id: 'user1',
-    email: 'user1@email.com',
-    password: 'user1-password',
-    name: 'user1',
-  },
-];
+import { UserService } from './user.service';
 @Resolver('User')
 export class UserResolver {
+  constructor(private readonly userService: UserService) {}
   @Query('user')
-  user(@Args('id') id: String) {
-    return find(users, { id });
+  async user(@Args('id') id: string) {
+    return await this.userService.findUser(id);
   }
-
-  // @ResolveProperty()
   @Query()
-  users() {
-    // return filter(users);
-    return users;
+  async users() {
+    return await this.userService.findUsers();
   }
 }

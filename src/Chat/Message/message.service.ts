@@ -12,14 +12,9 @@ export class MessageService {
   async createMessage(message: MessageCreateDto) {
     return await this.Model.create(message);
   }
-  async searchMessage(searchs: MessageSearchDto) {
+  async findMessagesByRoomId(roomId: string) {
     const query = this.Model.find({});
-    query.where('room').equals(searchs.room);
-    query.populate('user');
-    query.sort('-createdAt');
-    return await this.Model.paginate(query, {
-      offset: _.toNumber(searchs.offset),
-      limit: _.toNumber(searchs.limit),
-    });
+    query.where('room').equals(roomId);
+    return await query.exec();
   }
 }

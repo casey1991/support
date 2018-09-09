@@ -5,32 +5,44 @@ import {
   Args,
   Parent,
 } from '@nestjs/graphql';
-import { find, filter } from 'lodash';
-const rooms = [
-  {
-    id: 'room1',
-    users: [
-      {
-        id: 'user1',
-        email: 'user1@email.com',
-        password: 'user1-password',
-        name: 'user1',
-      },
-    ],
-    name: 'room1',
-    messages: [{ id: 'message1', user: 'user1', room: 'room1', text: 'text1' }],
-  },
-];
+import { RoomService } from './room.service';
+import { UserService } from '../../User/user.service';
+import { MessageService } from '../Message/message.service';
+import { RoomSearchDto } from './dto/room.search.dto';
+import { findIndex, filter, map, includes } from 'lodash';
 @Resolver('Room')
 export class RoomResolver {
+  constructor(
+    private readonly roomService: RoomService,
+    private readonly userService: UserService,
+    private readonly messageService: MessageService,
+  ) {}
   @Query('room')
-  room(@Args('id') id: String) {
-    return find(rooms, { id });
+  async room(@Args('id') id: string) {
+    return await this.roomService.getRoom(id);
   }
 
   // @ResolveProperty()
   @Query()
-  rooms() {
-    return rooms;
+  async rooms() {
+    const dto = new RoomSearchDto();
+    return await this.roomService.searchRooms(dto);
+  }
+  @ResolveProperty('users')
+  async getUsers(@Parent() room) {
+    const users = room.users;
+    const all = await this.userService.getAll();
+    return filter(all, item => {
+      const userId = item.id;
+      const include = findIndex(users, user => {
+        return user._id.equals(userId);
+      });
+      return include;
+    });
+  }
+  @ResolveProperty('messages')
+  async getMessages(@Parent() room) {
+    const roomId = room.id;
+    return await this.messageService.findMessagesByRoomId(roomId);
   }
 }

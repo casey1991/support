@@ -22,8 +22,13 @@ export class UserService {
   async getAll(): Promise<User[]> {
     return await this.UserModel.find().exec();
   }
-  async findUser(findUserDto: FindUserDto): Promise<User> {
-    const user = await this.UserModel.findOne({ _id: findUserDto._id }).exec();
+  async findUser(_id: string): Promise<User> {
+    const user = await this.UserModel.findOne({ _id }).exec();
     return user;
+  }
+  async findUsers() {
+    const query = this.UserModel.find({});
+    // query.where('_id').in(_ids);
+    return await query.exec();
   }
 }
