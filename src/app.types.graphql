@@ -3,7 +3,7 @@ type Message {
   user: User!
   room: Room!
   text: String
-  type: Number
+  type: Int!
 }
 type Room {
   id: String!
@@ -43,4 +43,8 @@ type Mutation {
     text: String
     type: Int!
   ): Message
+}
+
+type Subscription {
+  messageCreated(repoFullName: String!): Message
 }

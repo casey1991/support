@@ -5,14 +5,17 @@ import {
   Args,
   Parent,
   Mutation,
+  Subscription,
 } from '@nestjs/graphql';
 import { MessageService } from './message.service';
 import { UserService } from '../../User/user.service';
 import { RoomService } from '../Room/room.service';
 
 import { MessageCreateDto } from './dto/message.create.dto';
+import { PubSub } from 'graphql-subscriptions';
 
-import { find } from 'lodash';
+const pubSub = new PubSub();
+
 @Resolver('Message')
 export class MessageResolver {
   constructor(
@@ -51,6 +54,13 @@ export class MessageResolver {
     dto.text = text;
     dto.type = type;
     const message = await this.messageService.createMessage(dto);
+    pubSub.publish('messageCreated', { messageCreated: message });
     return message;
+  }
+  @Subscription('messageCreated')
+  messageCreated() {
+    return {
+      subscribe: () => pubSub.asyncIterator('messageCreated'),
+    };
   }
 }
