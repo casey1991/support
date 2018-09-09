@@ -12,6 +12,13 @@ export class MessageService {
   async createMessage(message: MessageCreateDto) {
     return await this.Model.create(message);
   }
+  async findMessageById(id: string) {
+    return await this.Model.findOneById(id);
+  }
+  async findMessages() {
+    const query = this.Model.find({});
+    return await query.exec();
+  }
   async findMessagesByRoomId(roomId: string) {
     const query = this.Model.find({});
     query.where('room').equals(roomId);

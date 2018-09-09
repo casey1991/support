@@ -5,20 +5,34 @@ import {
   Args,
   Parent,
 } from '@nestjs/graphql';
-import { find, filter } from 'lodash';
-const messages = [
-  { id: 'message1', user: 'user1', room: 'room1', text: 'text1' },
-];
+import { MessageService } from './message.service';
+import { UserService } from '../../User/user.service';
+import { RoomService } from '../Room/room.service';
+
+import { find } from 'lodash';
 @Resolver('Message')
 export class MessageResolver {
+  constructor(
+    private readonly messageService: MessageService,
+    private readonly userService: UserService,
+    private readonly roomService: RoomService,
+  ) {}
   @Query('message')
-  message(@Args('id') id: String) {
-    return find(messages, { id });
+  async message(@Args('id') id: string) {
+    return await this.messageService.findMessageById(id);
   }
-
-  // @ResolveProperty()
   @Query()
-  messages() {
-    return messages;
+  async messages() {
+    return await this.messageService.findMessages();
+  }
+  @ResolveProperty('room')
+  async getRoom(@Parent() message) {
+    const roomId = message.room;
+    return await this.roomService.getRoom(roomId);
+  }
+  @ResolveProperty('user')
+  async getUser(@Parent() message) {
+    const userId = message.user;
+    return await this.userService.findUser(userId);
   }
 }
