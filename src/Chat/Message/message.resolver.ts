@@ -13,6 +13,7 @@ import { RoomService } from '../Room/room.service';
 
 import { MessageCreateDto } from './dto/message.create.dto';
 import { PubSub } from 'graphql-subscriptions';
+import { UseGuards } from '@nestjs/common';
 
 const pubSub = new PubSub();
 

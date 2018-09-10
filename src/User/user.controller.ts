@@ -52,7 +52,7 @@ export class UserController {
   ): Promise<User> {
     const currentUser = req.user;
     if (!findUserDto._id) findUserDto._id = currentUser._id;
-    return this.userService.findUser(findUserDto);
+    return this.userService.findUser(findUserDto._id);
   }
 
   @UsePipes(new ValidationPipe())

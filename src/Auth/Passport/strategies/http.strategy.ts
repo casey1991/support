@@ -9,11 +9,11 @@ export class HttpStrategy extends PassportStrategy(Strategy) {
     super();
   }
 
-  async validate(token: string, done: Function) {
-    const user = this.authService.validateUser(token);
+  async validate(token: string) {
+    const user = await this.authService.validateToken(token);
     if (!user) {
-      return done(new UnauthorizedException(), false);
+      throw new UnauthorizedException();
     }
-    done(null, user);
+    return user;
   }
 }
