@@ -10,6 +10,7 @@ import {
   Request,
   UseFilters,
 } from '@nestjs/common';
+import * as Passport from 'passport';
 
 // services
 import { UserService } from './user.service';
@@ -41,6 +42,7 @@ export class UserController {
   @UseGuards(AuthGuard('jwt'))
   @Get('users')
   async getAll(): Promise<User[]> {
+    console.log(Passport);
     return this.userService.getAll();
   }
   @UsePipes(new ValidationPipe())
@@ -50,6 +52,7 @@ export class UserController {
     @Request() req,
     @Query() findUserDto: FindUserDto,
   ): Promise<User> {
+    console.log(Passport);
     const currentUser = req.user;
     if (!findUserDto._id) findUserDto._id = currentUser._id;
     return this.userService.findUser(findUserDto._id);

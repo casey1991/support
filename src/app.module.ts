@@ -2,6 +2,7 @@ import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import * as Passport from 'passport';
 
 import { GraphQLModule } from '@nestjs/graphql';
 
@@ -32,6 +33,17 @@ import { CatModule } from './Cat/cat.module';
     GraphQLModule.forRoot({
       typePaths: ['./**/*.graphql'],
       installSubscriptionHandlers: true,
+      context: ({ req, res }) => {
+        const userPromise = new Promise((resolve, reject) => {
+          Passport.authenticate('jwt', (err, user) => {
+            if (err) {
+              resolve({ user: false });
+            }
+            resolve({ user: user });
+          })(req, res);
+        });
+        return userPromise;
+      },
     }),
   ],
   controllers: [AppController],

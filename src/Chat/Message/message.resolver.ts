@@ -14,6 +14,8 @@ import { RoomService } from '../Room/room.service';
 import { MessageCreateDto } from './dto/message.create.dto';
 import { PubSub } from 'graphql-subscriptions';
 import { UseGuards } from '@nestjs/common';
+import { GraphqlAuthGuard } from '../../Common/Guards/graphql.auth.guard';
+import { AuthGuard } from '@nestjs/passport';
 
 const pubSub = new PubSub();
 
@@ -42,6 +44,7 @@ export class MessageResolver {
     const userId = message.user;
     return await this.userService.findUser(userId);
   }
+  @UseGuards(GraphqlAuthGuard)
   @Mutation()
   async createMessage(
     @Args('roomId') roomId: string,
