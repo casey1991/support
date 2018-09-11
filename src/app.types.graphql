@@ -46,5 +46,5 @@ type Mutation {
 }
 
 type Subscription {
-  messageCreated: Message
+  messageCreated(roomId: String!): Message
 }

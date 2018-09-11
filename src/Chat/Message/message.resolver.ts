@@ -69,7 +69,12 @@ export class MessageResolver {
       subscribe: withFilter(
         () => pubSub.asyncIterator('messageCreated'),
         (payload, variables, context, info) => {
-          return true;
+          const message = payload.message;
+          if (message.room.equals(variables.roomId)) {
+            return true;
+          } else {
+            return false;
+          }
         },
       ),
     };
