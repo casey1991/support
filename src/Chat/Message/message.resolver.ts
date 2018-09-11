@@ -7,6 +7,7 @@ import {
   Mutation,
   Subscription,
 } from '@nestjs/graphql';
+import { withFilter } from 'graphql-subscriptions';
 import { MessageService } from './message.service';
 import { UserService } from '../../User/user.service';
 import { RoomService } from '../Room/room.service';
@@ -58,14 +59,19 @@ export class MessageResolver {
     dto.text = text;
     dto.type = type;
     const message = await this.messageService.createMessage(dto);
-    pubSub.publish('messageCreated', { messageCreated: message });
+    pubSub.publish('messageCreated', { message: message });
     return message;
   }
   @UseGuards(GraphqlAuthGuard)
   @Subscription('messageCreated')
   messageCreated() {
     return {
-      subscribe: () => pubSub.asyncIterator('messageCreated'),
+      subscribe: withFilter(
+        () => pubSub.asyncIterator('messageCreated'),
+        (payload, variables, context, info) => {
+          return true;
+        },
+      ),
     };
   }
 }

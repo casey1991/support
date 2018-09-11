@@ -51,12 +51,12 @@ const validationToken = token => {
     GraphQLModule.forRoot({
       typePaths: ['./**/*.graphql'],
       installSubscriptionHandlers: true,
-      context: ({ req, res }) => {
+      context: ({ req, res, connection }) => {
         if (req && res) {
           const token = req.headers.authorization;
           return validationToken(token);
         } else {
-          return { user: false };
+          return connection.context;
         }
       },
       subscriptions: {
