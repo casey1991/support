@@ -70,7 +70,7 @@ export class MessageResolver {
         () => pubSub.asyncIterator('messageCreated'),
         (payload, variables, context, info) => {
           const message = payload.message;
-          if (message.room.equals(variables.roomId)) {
+          if (context.user && message.room.equals(variables.roomId)) {
             return true;
           } else {
             return false;
