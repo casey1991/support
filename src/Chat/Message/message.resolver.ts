@@ -59,7 +59,7 @@ export class MessageResolver {
     dto.text = text;
     dto.type = type;
     const message = await this.messageService.createMessage(dto);
-    pubSub.publish('messageCreated', { message: message });
+    pubSub.publish('messageCreated', { messageCreated: message });
     return message;
   }
   @UseGuards(GraphqlAuthGuard)
@@ -69,7 +69,7 @@ export class MessageResolver {
       subscribe: withFilter(
         () => pubSub.asyncIterator('messageCreated'),
         (payload, variables, context, info) => {
-          const message = payload.message;
+          const message = payload.messageCreated;
           if (context.user && message.room.equals(variables.roomId)) {
             return true;
           } else {
