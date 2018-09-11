@@ -52,7 +52,6 @@ export class UserController {
     @Request() req,
     @Query() findUserDto: FindUserDto,
   ): Promise<User> {
-    console.log(Passport);
     const currentUser = req.user;
     if (!findUserDto._id) findUserDto._id = currentUser._id;
     return this.userService.findUser(findUserDto._id);

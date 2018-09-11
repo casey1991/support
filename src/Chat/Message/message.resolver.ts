@@ -61,6 +61,7 @@ export class MessageResolver {
     pubSub.publish('messageCreated', { messageCreated: message });
     return message;
   }
+  @UseGuards(GraphqlAuthGuard)
   @Subscription('messageCreated')
   messageCreated() {
     return {

@@ -2,7 +2,7 @@ import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import * as Passport from 'passport';
+import Axios from 'axios';
 
 import { GraphQLModule } from '@nestjs/graphql';
 
@@ -17,6 +17,24 @@ import { DealModule } from './Deal/deal.module';
 import { ShopModule } from './Shop/shop.module';
 import { CatModule } from './Cat/cat.module';
 
+const validationToken = token => {
+  const userPromise = new Promise((resolve, reject) => {
+    Axios.get('http://localhost:3000/user', {
+      headers: { Authorization: token },
+    })
+      .then(function(response) {
+        if (response.statusText !== 'OK') {
+          resolve({ user: false });
+        } else {
+          resolve({ user: response.data });
+        }
+      })
+      .catch(function(error) {
+        resolve({ user: false });
+      });
+  });
+  return userPromise;
+};
 @Module({
   imports: [
     ConfigModule,
@@ -34,15 +52,18 @@ import { CatModule } from './Cat/cat.module';
       typePaths: ['./**/*.graphql'],
       installSubscriptionHandlers: true,
       context: ({ req, res }) => {
-        const userPromise = new Promise((resolve, reject) => {
-          Passport.authenticate('jwt', (err, user) => {
-            if (err) {
-              resolve({ user: false });
-            }
-            resolve({ user: user });
-          })(req, res);
-        });
-        return userPromise;
+        if (req && res) {
+          const token = req.headers.authorization;
+          return validationToken(token);
+        } else {
+          return { user: false };
+        }
+      },
+      subscriptions: {
+        onConnect: connectionParams => {
+          const token = connectionParams['Authorization'];
+          return validationToken(token);
+        },
       },
     }),
   ],
