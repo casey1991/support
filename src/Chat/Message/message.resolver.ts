@@ -6,6 +6,7 @@ import {
   Parent,
   Mutation,
   Subscription,
+  Context,
 } from '@nestjs/graphql';
 import { withFilter } from 'graphql-subscriptions';
 import { MessageService } from './message.service';
@@ -16,7 +17,6 @@ import { MessageCreateDto } from './dto/message.create.dto';
 import { PubSub } from 'graphql-subscriptions';
 import { UseGuards } from '@nestjs/common';
 import { GraphqlAuthGuard } from '../../Common/Guards/graphql.auth.guard';
-import { AuthGuard } from '@nestjs/passport';
 
 const pubSub = new PubSub();
 
@@ -32,8 +32,10 @@ export class MessageResolver {
     return await this.messageService.findMessageById(id);
   }
   @Query()
-  async messages() {
-    return await this.messageService.findMessages();
+  @UseGuards(GraphqlAuthGuard)
+  async messages(@Args('roomId') roomId: string, @Context() context) {
+    const currentUser = context.user;
+    return await this.messageService.findMessages(currentUser.id, roomId);
   }
   @ResolveProperty('room')
   async getRoom(@Parent() message) {

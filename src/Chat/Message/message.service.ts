@@ -15,8 +15,10 @@ export class MessageService {
   async findMessageById(id: string) {
     return await this.Model.findOneById(id);
   }
-  async findMessages() {
+  async findMessages(userId: string, roomId: string) {
     const query = this.Model.find({});
+    query.where('user').equals(userId);
+    query.where('room').equals(roomId);
     return await query.exec();
   }
   async findMessagesByRoomId(roomId: string) {

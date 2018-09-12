@@ -27,7 +27,7 @@ type File {
 
 type Query {
   message(id: String!): Message
-  messages: [Message]
+  messages(roomId: String!): [Message]
   room(id: String!): Room
   rooms: [Room]
   user(id: String!): User
