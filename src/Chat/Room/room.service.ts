@@ -29,7 +29,7 @@ export class RoomService {
 
   async searchRooms(roomSearchDto: RoomSearchDto) {
     const query = this.RoomModel.find({});
-    // query.where('users').in(roomSearchDto._userIds);
+    query.where('users').in(roomSearchDto._userIds);
     return await query.exec();
   }
   async getRoom(roomId: string) {

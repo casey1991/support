@@ -4,12 +4,15 @@ import {
   ResolveProperty,
   Args,
   Parent,
+  Context,
 } from '@nestjs/graphql';
 import { RoomService } from './room.service';
 import { UserService } from '../../User/user.service';
 import { MessageService } from '../Message/message.service';
 import { RoomSearchDto } from './dto/room.search.dto';
 import { findIndex, filter, map, includes } from 'lodash';
+import { UseGuards } from '@nestjs/common';
+import { GraphqlAuthGuard } from '../../Common/Guards/graphql.auth.guard';
 @Resolver('Room')
 export class RoomResolver {
   constructor(
@@ -24,8 +27,10 @@ export class RoomResolver {
 
   // @ResolveProperty()
   @Query()
-  async rooms() {
+  @UseGuards(GraphqlAuthGuard)
+  async rooms(@Context() context) {
     const dto = new RoomSearchDto();
+    dto._userIds = [context.user._id];
     return await this.roomService.searchRooms(dto);
   }
   @ResolveProperty('users')
