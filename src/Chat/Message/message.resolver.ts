@@ -51,13 +51,14 @@ export class MessageResolver {
   @Mutation()
   async createMessage(
     @Args('roomId') roomId: string,
-    @Args('userId') userId: string,
     @Args('type') type: number,
     @Args('text') text: string,
+    @Context() context,
   ) {
+    const currentUser = context.user;
     const dto = new MessageCreateDto();
     dto.room = roomId;
-    dto.user = userId;
+    dto.user = currentUser._id;
     dto.text = text;
     dto.type = type;
     const message = await this.messageService.createMessage(dto);

@@ -37,12 +37,7 @@ type Query {
 }
 
 type Mutation {
-  createMessage(
-    roomId: String!
-    userId: String!
-    text: String
-    type: Int!
-  ): Message
+  createMessage(roomId: String!, text: String, type: Int!): Message
 }
 
 type Subscription {
