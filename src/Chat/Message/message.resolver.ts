@@ -35,7 +35,7 @@ export class MessageResolver {
   @UseGuards(GraphqlAuthGuard)
   async messages(@Args('roomId') roomId: string, @Context() context) {
     const currentUser = context.user;
-    return await this.messageService.findMessages(currentUser.id, roomId);
+    return await this.messageService.findMessages(currentUser._id, roomId);
   }
   @ResolveProperty('room')
   async getRoom(@Parent() message) {
