@@ -10,13 +10,15 @@ import { HttpException } from '@nestjs/common';
 export class HttpExceptionFilter implements ExceptionFilter {
   catch(exception: HttpException, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
-    const response = ctx.getResponse();
-    const request = ctx.getRequest();
-    const status = exception.getStatus();
-    response.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
-      statusCode: status,
-      timestamp: new Date().toISOString(),
-      path: request.url,
+    const httpRequest = ctx.getRequest();
+    const httpResponse = ctx.getResponse();
+
+    const errorStatus = exception.getStatus();
+    const errorMessage = exception.message;
+    return httpResponse.status(errorStatus).json({
+      error: errorMessage.error,
+      error_description: errorMessage.message,
+      error_uri: httpRequest.url,
     });
   }
 }

@@ -1,5 +1,5 @@
 import * as jwt from 'jsonwebtoken';
-import { Injectable, ForbiddenException } from '@nestjs/common';
+import { Injectable, BadRequestException } from '@nestjs/common';
 import { UserService } from '../User/user.service';
 
 import { CreateTokenDto } from './dto/create-token.dto';
@@ -11,16 +11,24 @@ export class AuthService {
   async createToken(createTokenDto: CreateTokenDto) {
     const user = await this.userService.findOneByEmail(createTokenDto.email);
     if (!user) {
-      throw new ForbiddenException();
+      throw new BadRequestException('invalid_request', 'invalid_request');
     } else {
       if (user.password === createTokenDto.password) {
         const expiresIn = 3600;
         const accessToken = jwt.sign({ email: user.email }, 'secretKey', {
           expiresIn,
         });
-        return { accessToken, expiresIn };
+        const refreshToken = jwt.sign({ id: user._id }, 'secretKey', {
+          expiresIn: 259200,
+        });
+        return {
+          access_token: accessToken,
+          token_type: 'bearer',
+          expires_in: expiresIn,
+          refresh_token: refreshToken,
+        };
       }
-      throw new ForbiddenException();
+      throw new BadRequestException();
     }
   }
   async validateUser(email: string): Promise<any> {
