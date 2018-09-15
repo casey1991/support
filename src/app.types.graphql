@@ -24,6 +24,13 @@ type File {
   fileMeta: String!
   size: String!
 }
+type Goods {
+  name: String!
+  price: Int!
+  acount: Int!
+  type: Int!
+  shop: String!
+}
 
 type Query {
   message(id: String!): Message
@@ -34,6 +41,8 @@ type Query {
   users: [User]
   file(id: String!): File
   files: [File]
+  goods(id: String!): Goods
+  goods: [Goods]
 }
 
 type Mutation {
