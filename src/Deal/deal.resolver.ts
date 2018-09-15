@@ -5,15 +5,15 @@ import {
   Args,
   Parent,
 } from '@nestjs/graphql';
-@Resolver('Goods')
+@Resolver('Deal')
 export class GoodsResolver {
   constructor() {}
-  @Query('goods')
-  async goods(@Args('id') id: string) {
+  @Query('deal')
+  async deal(@Args('id') id: string) {
     return [];
   }
   @Query()
-  async goodss() {
+  async deals() {
     return {};
   }
 }
