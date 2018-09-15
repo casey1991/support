@@ -10,7 +10,6 @@ import { ConfigModule } from './Config/config.module';
 import { AuthModule } from './Auth/auth.module';
 import { UserModule } from './User/user.module';
 import { ChatModule } from './Chat/chat.module';
-import { SocketModel } from './Socket/socket.model';
 import { ArticleModule } from './Article/article.module';
 import { FileModule } from './File/file.module';
 import { DealModule } from './Deal/deal.module';
@@ -44,7 +43,6 @@ const validationToken = token => {
     ChatModule,
     CatModule,
     ArticleModule,
-    SocketModel,
     FileModule,
     DealModule,
     ShopModule,
