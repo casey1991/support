@@ -30,14 +30,6 @@ export class GoodsResolver {
   }
   @Mutation('createGoods')
   async createGoods(@Args() args) {
-    const dto = new GoodsCreateDto();
-    dto.name = args.name;
-    dto.amount = args.amount;
-    dto.price = args.price;
-    dto.type = args.type;
-    dto.category = args.category;
-    dto.owner = args.owner;
-    dto.shop = args.shop;
-    return await this.goodsService.createGoods(dto);
+    return await this.goodsService.createGoods(args);
   }
 }

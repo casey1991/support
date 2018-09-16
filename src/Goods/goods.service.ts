@@ -8,8 +8,8 @@ export class GoodsService {
   constructor(
     @InjectModel('Goods') private readonly GoodsModel: Model<Goods>,
   ) {}
-  async createGoods(dto: GoodsCreateDto) {
-    return await this.GoodsModel.create(dto);
+  async createGoods(goods = {}) {
+    return await this.GoodsModel.create(goods);
   }
   async getGoodss() {
     return await this.GoodsModel.find({});
