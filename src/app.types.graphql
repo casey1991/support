@@ -30,7 +30,14 @@ type Goods {
   price: Int!
   amount: Int!
   type: Int!
-  shop: String!
+  shop: Shop
+  owner: User
+}
+type Shop {
+  id: String!
+  name: String!
+  owner: User!
+  goods: [Goods]
 }
 
 type Query {

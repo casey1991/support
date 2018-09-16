@@ -13,4 +13,7 @@ export class ShopService {
   async create(dto: ShopCreateDto): Promise<Shop> {
     return await this.ShopModel.create(dto);
   }
+  async getShop(id: String) {
+    return await this.ShopModel.findById(id);
+  }
 }
