@@ -25,9 +25,10 @@ type File {
   size: String!
 }
 type Goods {
+  id: String!
   name: String!
   price: Int!
-  acount: Int!
+  amount: Int!
   type: Int!
   shop: String!
 }
@@ -42,11 +43,18 @@ type Query {
   file(id: String!): File
   files: [File]
   goods(id: String!): Goods
-  goods: [Goods]
+  goodss: [Goods]
 }
 
 type Mutation {
   createMessage(roomId: String!, text: String, type: Int!): Message
+  createGoods(
+    name: String!
+    price: Int!
+    amount: Int!
+    type: Int
+    category: String
+  ): Goods
 }
 
 type Subscription {

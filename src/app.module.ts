@@ -14,6 +14,7 @@ import { ArticleModule } from './Article/article.module';
 import { FileModule } from './File/file.module';
 import { DealModule } from './Deal/deal.module';
 import { ShopModule } from './Shop/shop.module';
+import { GoodsModule } from './Goods/goods.module';
 import { CatModule } from './Cat/cat.module';
 
 const validationToken = token => {
@@ -46,6 +47,7 @@ const validationToken = token => {
     FileModule,
     DealModule,
     ShopModule,
+    GoodsModule,
     GraphQLModule.forRoot({
       typePaths: ['./**/*.graphql'],
       installSubscriptionHandlers: true,

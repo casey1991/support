@@ -1,5 +1,4 @@
-export interface Goods {
-  _id: String;
+export class GoodsCreateDto {
   name: String;
   price: Number;
   amount: Number;
