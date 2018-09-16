@@ -31,4 +31,9 @@ export class UserService {
     // query.where('_id').in(_ids);
     return await query.exec();
   }
+  async updateUser(_id: string, updateData = {}) {
+    return await this.UserModel.findOneAndUpdate({ _id }, updateData, {
+      new: true,
+    });
+  }
 }

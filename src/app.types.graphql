@@ -62,6 +62,7 @@ type Mutation {
     type: Int
     category: String
   ): Goods
+  updateUser(name: String, avatar: String): User
 }
 
 type Subscription {
