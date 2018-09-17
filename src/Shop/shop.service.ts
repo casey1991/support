@@ -19,4 +19,9 @@ export class ShopService {
   async getShops() {
     return await this.ShopModel.find({});
   }
+  async updateShop(conditions = {}, update = {}) {
+    return await this.ShopModel.findOneAndUpdate(conditions, update, {
+      new: true,
+    });
+  }
 }

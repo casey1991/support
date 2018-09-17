@@ -11,8 +11,8 @@ export class GoodsService {
   async createGoods(goods = {}) {
     return await this.GoodsModel.create(goods);
   }
-  async getGoodss() {
-    return await this.GoodsModel.find({});
+  async getGoodss(conditions = {}) {
+    return await this.GoodsModel.find(conditions);
   }
   async getGoods(id: String) {
     return await this.GoodsModel.findById(id);

@@ -6,13 +6,14 @@ import {
   Parent,
   Mutation,
 } from '@nestjs/graphql';
+import { Inject, forwardRef } from '@nestjs/common';
 import { GoodsService } from './goods.service';
 import { ShopService } from '../Shop/shop.service';
-import { GoodsCreateDto } from './dto/goods.create.dto';
 @Resolver('Goods')
 export class GoodsResolver {
   constructor(
     private readonly goodsService: GoodsService,
+    @Inject(forwardRef(() => ShopService))
     private readonly shopService: ShopService,
   ) {}
   @Query('goods')

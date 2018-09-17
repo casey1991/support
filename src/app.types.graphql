@@ -80,6 +80,8 @@ type Mutation {
   updateUser(name: String, avatar: String): User
   uploadFile(file: Upload!): File
   uploadFiles(files: [Upload!]): [File]
+  addGoodsToShop(shopId: String!, goodsId: [String]!): Shop
+  removeGoodsFromShop(shopId: String!, goodsId: [String]!): Shop
 }
 
 type Subscription {
