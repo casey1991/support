@@ -38,7 +38,7 @@ export class ShopResolver {
   async addGoodsToShop(@Args('shopId') shopId, @Args('goodsId') _ids) {
     return await this.shopService.updateShop(
       { _id: shopId },
-      { $addToSet: { goods: [_ids] } },
+      { $addToSet: { goods: _ids } },
     );
   }
   @Mutation('removeGoodsFromShop')
