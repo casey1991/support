@@ -1,5 +1,4 @@
 scalar Upload
-
 type Message {
   id: String!
   user: User!
@@ -26,6 +25,10 @@ type File {
   fileMeta: String!
   size: String!
 }
+enum GoodsStatus {
+  PRIVATE
+  PUBLIC
+}
 type Goods {
   id: String!
   name: String!
@@ -35,12 +38,18 @@ type Goods {
   type: Int!
   shop: Shop
   owner: User
+  status: GoodsStatus
+}
+enum ShopStatus {
+  PRIVATE
+  PUBLIC
 }
 type Shop {
   id: String!
   name: String!
   owner: User!
   goods: [Goods]
+  status: ShopStatus
 }
 
 type Query {
@@ -54,6 +63,8 @@ type Query {
   files: [File]
   goods(id: String!): Goods
   goodss: [Goods]
+  shop(id: String!): Shop
+  shops: [Shop]
 }
 
 type Mutation {

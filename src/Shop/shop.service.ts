@@ -16,4 +16,7 @@ export class ShopService {
   async getShop(id: String) {
     return await this.ShopModel.findById(id);
   }
+  async getShops() {
+    return await this.ShopModel.find({});
+  }
 }

@@ -9,4 +9,5 @@ export const GoodsSchema = new mongoose.Schema({
   category: { type: Schema.Types.ObjectId, ref: 'Category' },
   shop: { type: Schema.Types.ObjectId, ref: 'Shop' },
   owner: { type: Schema.Types.ObjectId, ref: 'User' }, // when type is private, goods should has owner user
+  status: { type: Schema.Types.String, default: 'PRIVATE' }, // private & public
 });
