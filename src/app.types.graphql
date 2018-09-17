@@ -1,3 +1,5 @@
+scalar Upload
+
 type Message {
   id: String!
   user: User!
@@ -65,6 +67,8 @@ type Mutation {
     category: String
   ): Goods
   updateUser(name: String, avatar: String): User
+  uploadFile(file: Upload!): File
+  uploadFiles(files: [Upload!]): [File]
 }
 
 type Subscription {

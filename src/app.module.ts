@@ -1,5 +1,6 @@
 import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
+import { GraphQLUpload } from 'apollo-server-express';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import Axios from 'axios';
@@ -65,6 +66,7 @@ const validationToken = token => {
           return validationToken(token);
         },
       },
+      resolvers: { Upload: GraphQLUpload },
     }),
   ],
   controllers: [AppController],
