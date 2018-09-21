@@ -86,6 +86,7 @@ type Mutation {
     type: Int
     category: String
   ): Goods
+  signup(name: String!, email: String!, password: String!): User
   updateUser(name: String, avatar: String): User
   uploadFile(file: Upload!): File
   uploadFiles(files: [Upload!]): [File]
