@@ -48,12 +48,12 @@ export class GoodsResolver {
       ...args,
     });
     // also we should add goods to elastic search db
-    const elasticAdded = await this.searchService.create(
-      'lo00ol',
-      'goods',
-      goods.id,
-      goods,
-    );
+    // const elasticAdded = await this.searchService.create(
+    //   'lo00ol',
+    //   'goods',
+    //   goods.id,
+    //   goods,
+    // );
     return goods;
   }
 }
