@@ -11,6 +11,7 @@ import { Inject, forwardRef, UseGuards } from '@nestjs/common';
 import { GoodsService } from './goods.service';
 import { ShopService } from '../Shop/shop.service';
 import { UserService } from '../User/user.service';
+import { SearchService } from '../Search/search.service';
 import { GraphqlAuthGuard } from '../Common/Guards/graphql.auth.guard';
 @Resolver('Goods')
 export class GoodsResolver {
@@ -19,6 +20,7 @@ export class GoodsResolver {
     @Inject(forwardRef(() => ShopService))
     private readonly shopService: ShopService,
     private readonly userService: UserService,
+    private readonly searchService: SearchService,
   ) {}
   @Query('goods')
   async goods(@Args('id') id: string) {
@@ -41,9 +43,17 @@ export class GoodsResolver {
   @UseGuards(GraphqlAuthGuard)
   @Mutation('createGoods')
   async createGoods(@Args() args, @Context() context) {
-    return await this.goodsService.createGoods({
+    const goods = await this.goodsService.createGoods({
       owner: context.user._id,
       ...args,
     });
+    // also we should add goods to elastic search db
+    const elasticAdded = await this.searchService.create(
+      'lo00ol',
+      'goods',
+      goods.id,
+      goods,
+    );
+    return goods;
   }
 }

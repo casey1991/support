@@ -20,6 +20,7 @@
   "dependencies": {
     "@nestjs/common": "^5.3.5",
     "@nestjs/core": "^5.3.4",
+    "@nestjs/elasticsearch": "^0.1.2",
     "@nestjs/graphql": "^5.1.2",
     "@nestjs/microservices": "^5.3.5",
     "@nestjs/mongoose": "^5.2.1",
@@ -40,6 +41,7 @@
     "joi": "^13.6.0",
     "jsonwebtoken": "^8.2.2",
     "lodash": "^4.17.10",
+    "mongoosastic": "^4.4.1",
     "mongoose": "^5.2.13",
     "mongoose-paginate": "^5.0.3",
     "node-fs-extra": "^0.8.2",

@@ -1,4 +1,5 @@
 import * as mongoose from 'mongoose';
+// import * as mongoosastic from 'mongoosastic';
 const Schema = mongoose.Schema;
 export const GoodsSchema = new mongoose.Schema({
   name: { type: Schema.Types.String, required: true },
@@ -11,3 +12,5 @@ export const GoodsSchema = new mongoose.Schema({
   owner: { type: Schema.Types.ObjectId, ref: 'User' }, // when type is private, goods should has owner user
   status: { type: Schema.Types.String, default: 'PRIVATE' }, // private & public
 });
+
+// GoodsSchema.plugin(mongoosastic);
