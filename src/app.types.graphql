@@ -64,7 +64,7 @@ type Query {
   messages(roomId: String!): [Message]
   room(id: String!): Room
   rooms: [Room]
-  user(id: String!): User
+  user(id: String): User
   users: [User]
   file(id: String!): File
   files: [File]

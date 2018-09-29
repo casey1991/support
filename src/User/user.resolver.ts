@@ -14,9 +14,11 @@ import { GraphqlAuthGuard } from '../Common/Guards/graphql.auth.guard';
 @Resolver('User')
 export class UserResolver {
   constructor(private readonly userService: UserService) {}
+  @UseGuards(GraphqlAuthGuard)
   @Query('user')
-  async user(@Args('id') id: string) {
-    return await this.userService.findUser(id);
+  async user(@Args('id') id: string, @Context() context) {
+    const currentUser = context.user;
+    return await this.userService.findUser(id ? id : currentUser._id);
   }
   @Query()
   async users() {

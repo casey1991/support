@@ -21,7 +21,7 @@ import { SearchModule } from './Search/search.module';
 
 const validationToken = token => {
   const userPromise = new Promise((resolve, reject) => {
-    Axios.get('http://localhost:3000/user', {
+    Axios.get('http://localhost:3210/user', {
       headers: { Authorization: token },
     })
       .then(function(response) {
