@@ -19,4 +19,8 @@ export class AuthResolver {
   async signup(@Args() args) {
     return await this.userService.create({ ...args });
   }
+  @Mutation('createToken')
+  async createToken(@Args('email') email, @Args('password') password) {
+    return await this.authService.createToken(email, password);
+  }
 }

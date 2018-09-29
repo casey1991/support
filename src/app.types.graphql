@@ -75,7 +75,9 @@ type Query {
   article(id: String!): Article
   articles: [Article]
 }
-
+type TokenResponse {
+  access_token: String!
+}
 type Mutation {
   createMessage(roomId: String!, text: String, type: Int!): Message
   createGoods(
@@ -87,6 +89,7 @@ type Mutation {
     category: String
   ): Goods
   signup(name: String!, email: String!, password: String!): User
+  createToken(email: String!, password: String!): TokenResponse
   updateUser(name: String, avatar: String): User
   uploadFile(file: Upload!): File
   uploadFiles(files: [Upload!]): [File]

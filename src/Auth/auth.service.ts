@@ -8,12 +8,12 @@ import { CreateTokenDto } from './dto/create-token.dto';
 export class AuthService {
   constructor(private readonly userService: UserService) {}
 
-  async createToken(createTokenDto: CreateTokenDto) {
-    const user = await this.userService.findOneByEmail(createTokenDto.email);
+  async createToken(email: string, password: string) {
+    const user = await this.userService.findOneByEmail(email);
     if (!user) {
       throw new BadRequestException('invalid_request', 'invalid_request');
     } else {
-      if (user.password === createTokenDto.password) {
+      if (user.password === password) {
         const expiresIn = 3600;
         const accessToken = jwt.sign({ email: user.email }, 'secretKey', {
           expiresIn,
