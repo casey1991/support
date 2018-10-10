@@ -18,8 +18,8 @@
     "webpack": "webpack --config webpack.config.js"
   },
   "dependencies": {
-    "@nestjs/common": "^5.3.5",
-    "@nestjs/core": "^5.3.4",
+    "@nestjs/common": "^5.3.9",
+    "@nestjs/core": "^5.3.10",
     "@nestjs/elasticsearch": "^0.1.2",
     "@nestjs/graphql": "^5.1.2",
     "@nestjs/microservices": "^5.3.5",
@@ -36,8 +36,8 @@
     "eslint": "^5.5.0",
     "fastify-formbody": "^2.0.1",
     "graphql": "^14.0.0",
-    "graphql-subscriptions": "^0.5.8",
-    "graphql-tools": "^3.1.1",
+    "graphql-subscriptions": "^1.0.0",
+    "graphql-tools": "^4.0.0",
     "joi": "^13.6.0",
     "jsonwebtoken": "^8.2.2",
     "lodash": "^4.17.10",

@@ -35,7 +35,10 @@ export class AuthController {
    */
   @Post('token')
   async createToken(@Body() createTokenDto: CreateTokenDto) {
-    return await this.authService.createToken(createTokenDto);
+    return await this.authService.createToken(
+      createTokenDto.email,
+      createTokenDto.password,
+    );
   }
 
   /**
