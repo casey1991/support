@@ -5,6 +5,7 @@ import {
   Args,
   Parent,
   Context,
+  Mutation,
 } from '@nestjs/graphql';
 import { RoomService } from './room.service';
 import { UserService } from '../../User/user.service';
@@ -32,6 +33,15 @@ export class RoomResolver {
     const dto = new RoomSearchDto();
     dto._userIds = [context.user._id];
     return await this.roomService.searchRooms(dto);
+  }
+  @UseGuards(GraphqlAuthGuard)
+  @Mutation('createRoom')
+  async createRoom(@Args('name') name: string, @Context() context) {
+    const currentUser = context.user;
+    return await this.roomService.createRoom({
+      name,
+      users: [currentUser._id],
+    });
   }
   @ResolveProperty('users')
   async getUsers(@Parent() room) {

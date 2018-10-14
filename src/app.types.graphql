@@ -81,6 +81,7 @@ type TokenResponse {
 }
 type Mutation {
   createMessage(roomId: String!, text: String, type: Int!): Message
+  createRoom(name: String!): Room
   createGoods(
     name: String!
     price: Int!
