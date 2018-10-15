@@ -1,10 +1,16 @@
 scalar Upload
+enum ENUM_MESSAGE_STATUS {
+  SENDING
+  RECEIVED
+  VIEWED
+}
 type Message {
   id: String!
   user: User!
   room: Room!
   text: String
   type: Int!
+  status: ENUM_MESSAGE_STATUS
 }
 type Room {
   id: String!

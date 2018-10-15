@@ -9,11 +9,11 @@ import {
   Context,
 } from '@nestjs/graphql';
 import { withFilter } from 'graphql-subscriptions';
+import { map, every, findIndex } from 'lodash';
 import { MessageService } from './message.service';
 import { UserService } from '../../User/user.service';
 import { RoomService } from '../Room/room.service';
 
-import { MessageCreateDto } from './dto/message.create.dto';
 import { PubSub } from 'graphql-subscriptions';
 import { UseGuards } from '@nestjs/common';
 import { GraphqlAuthGuard } from '../../Common/Guards/graphql.auth.guard';
@@ -47,6 +47,20 @@ export class MessageResolver {
     const userId = message.user;
     return await this.userService.findUser(userId);
   }
+  @ResolveProperty('status')
+  async getStatusedUser(@Parent() message) {
+    const room = await this.roomService.getRoom(message.room);
+    const usersInRoom = map(room.users, user => user.toString());
+    const usersInViewd = message.viewed;
+    // if(usersInViewd<=)
+    const allIn = every(usersInRoom, inRoom => {
+      if (findIndex(usersInViewd, inViewed => inRoom === inViewed)) return true;
+      return false;
+    });
+    const result = allIn ? 'VIEWED' : 'RECEIVED';
+    // SENDING || RECEIVED ||  VIEWED
+    return result;
+  }
   @UseGuards(GraphqlAuthGuard)
   @Mutation()
   async createMessage(
@@ -56,12 +70,13 @@ export class MessageResolver {
     @Context() context,
   ) {
     const currentUser = context.user;
-    const dto = new MessageCreateDto();
-    dto.room = roomId;
-    dto.user = currentUser._id;
-    dto.text = text;
-    dto.type = type;
-    const message = await this.messageService.createMessage(dto);
+    const message = await this.messageService.createMessage({
+      room: roomId,
+      user: currentUser._id,
+      text: text,
+      type: type,
+      viewed: [currentUser._id],
+    });
     pubSub.publish('messageCreated', { messageCreated: message });
     return message;
   }

@@ -9,7 +9,7 @@ import { MessageSearchDto } from './dto/message.search.dto';
 @Injectable()
 export class MessageService {
   constructor(@InjectModel('Message') private readonly Model: Model<Message>) {}
-  async createMessage(message: MessageCreateDto) {
+  async createMessage(message = {}) {
     return await this.Model.create(message);
   }
   async findMessageById(id: string) {
